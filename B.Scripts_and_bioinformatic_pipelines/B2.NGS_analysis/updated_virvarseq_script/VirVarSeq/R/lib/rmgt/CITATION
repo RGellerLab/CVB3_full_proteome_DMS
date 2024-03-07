@@ -1,0 +1,12 @@
+citHeader("To cite the original algorithm, use:")
+
+citEntry(entry="Article",
+         title="Fitting Mixture Models to Groupend and Truncated Data via the EM Algorithm",
+         author=personList(as.person("GJ McLachlen"),
+                           as.person("PN Jones")),
+         journal = "Biometrics",
+         year="1988",
+         volume="44",
+         pages="571-578",
+         textVersion="McLachlan, G.J. and Jones, P.N. (1988) Fitting Mixture Models to Grouped and Truncated Data via the EM Algorithm Biometrics, 44, 571-578."  
+)

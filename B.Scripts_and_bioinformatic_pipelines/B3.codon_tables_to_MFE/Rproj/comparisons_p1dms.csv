@@ -1,0 +1,9 @@
+pre,post,name,per_rep,per_lib,per_region
+p1_L1_plasmid,p1_L1_virus_rep1,p1_L1_virus_rep1,p1_L1_virus_rep1,p1_L1_virus,rP1
+p1_L1_plasmid,p1_L1_virus_rep2,p1_L1_virus_rep2,p1_L1_virus_rep2,p1_L1_virus,rP1
+p1_L1_plasmid,p1_L1_virus_rep3,p1_L1_virus_rep3,p1_L1_virus_rep3,p1_L1_virus,rP1
+p1_L1_plasmid,p1_L1_virus_rep4,p1_L1_virus_rep4,p1_L1_virus_rep4,p1_L1_virus,rP1
+p1_L2_plasmid,p1_L2_virus_rep1,p1_L2_virus_rep1,p1_L2_virus_rep1,p1_L2_virus,rP1
+p1_L2_plasmid,p1_L2_virus_rep2,p1_L2_virus_rep2,p1_L2_virus_rep2,p1_L2_virus,rP1
+p1_L2_plasmid,p1_L2_virus_rep3,p1_L2_virus_rep3,p1_L2_virus_rep3,p1_L2_virus,rP1
+p1_L2_plasmid,p1_L2_virus_rep4,p1_L2_virus_rep4,p1_L2_virus_rep4,p1_L2_virus,rP1

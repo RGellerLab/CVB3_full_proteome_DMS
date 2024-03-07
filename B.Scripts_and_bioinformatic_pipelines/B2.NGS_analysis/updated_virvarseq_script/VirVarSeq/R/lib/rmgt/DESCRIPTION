@@ -1,0 +1,20 @@
+Package: rmgt
+Title: fitting mixture of normal distribution on grouped, truncated
+        data
+Version: 0.9.001
+Date: 2013-11-22
+Authors@R: c(person("Joris FA","Meys",email="Joris.Meys@UGent.be",
+    role=c("aut","cre")),
+    person("G.J.","McLachlan",role=c("aut")),
+    person("P.N.","Jones",role=c("aut")))
+Description: This package is a wrapper around the mgt Fortran routine written
+    by McLachlan and Jones. It allows to use their EM algorithm for fitting a
+    mixture of normal distributions on grouped, truncated data within R.
+License: GPL (>=2)
+Collate: 'F_mgt.R'
+Packaged: 2013-11-22 11:05:01 UTC; Joris
+Author: Joris FA Meys [aut, cre],
+  G.J. McLachlan [aut],
+  P.N. Jones [aut]
+Maintainer: Joris FA Meys <Joris.Meys@UGent.be>
+Built: R 4.2.1; x86_64-pc-linux-gnu; 2023-04-13 11:35:01 UTC; unix

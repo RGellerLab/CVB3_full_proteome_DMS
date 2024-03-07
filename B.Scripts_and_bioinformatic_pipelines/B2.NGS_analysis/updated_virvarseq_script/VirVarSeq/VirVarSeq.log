@@ -1,0 +1,439 @@
+2023-04-13 15:46:25	./map_vs_ref.pl	1.0 Checking command line arguments ...
+2023-04-13 15:46:25	./map_vs_ref.pl	1.1 Checking input and output locations ...
+2023-04-13 15:46:25	./map_vs_ref.pl	|--- Check fastq dir ...
+2023-04-13 15:46:25	./map_vs_ref.pl	|--- Check map_vs_ref dir ...
+2023-04-13 15:46:25	./map_vs_ref.pl	1.2 Load in reference ...
+2023-04-13 15:46:25	./map_vs_ref.pl	1.3 Get sample names from file [./testdata/samples.txt]...
+2023-04-13 15:46:25	./map_vs_ref.pl	1.4 Do read mapping and save SAM file ...
+2023-04-13 15:46:25	./map_vs_ref.pl	1.4.1 Locate reads ...
+2023-04-13 15:46:25	./map_vs_ref.pl	1.4.2 Map reads for sample [110901_6_12_random_1] ...
+2023-04-13 15:46:25	./map_vs_ref.pl	!---- Paired end mapping using ./testdata/fastq/Sample_110901_6_12_random_1/110901_6_12_random_1_CTTGTA_L006_R1_001.fastq.gz ./testdata/fastq/Sample_110901_6_12_random_1/110901_6_12_random_1_CTTGTA_L006_R2_001.fastq.gz ...
+2023-04-13 15:46:25	./map_vs_ref.pl	Start aligning read
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 178.87 sec
+[bwa_aln_core] write to the disk... 0.03 sec
+[bwa_aln_core] 262144 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 182.46 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 524288 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 182.91 sec
+[bwa_aln_core] write to the disk... 0.03 sec
+[bwa_aln_core] 786432 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 169.04 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 1030583 sequences have been processed.
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa aln -t 8 -q 15 -n 12 -k 6 -f ./testdata/results/map_vs_ref/110901_6_12_random_1.1.sai ./testdata/ref/1b_con1_AJ238799.NCBI.fa ./testdata/fastq/Sample_110901_6_12_random_1/110901_6_12_random_1_CTTGTA_L006_R1_001.fastq.gz
+[main] Real time: 94.663 sec; CPU: 715.512 sec
+2023-04-13 15:48:00	./map_vs_ref.pl	End aligning read
+2023-04-13 15:48:00	./map_vs_ref.pl	Start aligning read
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 194.27 sec
+[bwa_aln_core] write to the disk... 0.03 sec
+[bwa_aln_core] 262144 sequences have been processed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 190.27 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 524288 sequences have been processed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 191.68 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 786432 sequences have been processed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 176.83 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 1030583 sequences have been processed.
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa aln -t 8 -q 15 -n 12 -k 6 -f ./testdata/results/map_vs_ref/110901_6_12_random_1.2.sai ./testdata/ref/1b_con1_AJ238799.NCBI.fa ./testdata/fastq/Sample_110901_6_12_random_1/110901_6_12_random_1_CTTGTA_L006_R2_001.fastq.gz
+[main] Real time: 99.451 sec; CPU: 755.537 sec
+2023-04-13 15:49:39	./map_vs_ref.pl	End aligning read
+2023-04-13 15:49:39	./map_vs_ref.pl	Start generating paired alignment
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_sai2sam_pe_core] convert to sequence coordinate... 
+[infer_isize] (25, 50, 75) percentile: (135, 189, 281)
+[infer_isize] low and high boundaries: 70 and 573 for estimating avg and std
+[infer_isize] inferred external isize from 121942 pairs: 214.029 +/- 98.750
+[infer_isize] skewness: 0.800; kurtosis: -0.010; ap_prior: 1.00e-05
+[infer_isize] inferred maximum insert size: 690 (4.82 sigma)
+[bwa_sai2sam_pe_core] time elapses: 0.90 sec
+[bwa_sai2sam_pe_core] changing coordinates of 1 alignments.
+[bwa_sai2sam_pe_core] align unmapped mate...
+[bwa_paired_sw] 3098 out of 38144 Q17 singletons are mated.
+[bwa_paired_sw] 8 out of 2571 Q17 discordant pairs are fixed.
+[bwa_sai2sam_pe_core] time elapses: 0.67 sec
+[bwa_sai2sam_pe_core] refine gapped alignments... 0.26 sec
+[bwa_sai2sam_pe_core] print alignments... 0.58 sec
+[bwa_sai2sam_pe_core] 262144 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_sai2sam_pe_core] convert to sequence coordinate... 
+[infer_isize] (25, 50, 75) percentile: (135, 189, 280)
+[infer_isize] low and high boundaries: 70 and 570 for estimating avg and std
+[infer_isize] inferred external isize from 121798 pairs: 213.843 +/- 98.613
+[infer_isize] skewness: 0.808; kurtosis: 0.004; ap_prior: 1.00e-05
+[infer_isize] inferred maximum insert size: 690 (4.83 sigma)
+[bwa_sai2sam_pe_core] time elapses: 0.89 sec
+[bwa_sai2sam_pe_core] changing coordinates of 1 alignments.
+[bwa_sai2sam_pe_core] align unmapped mate...
+[bwa_paired_sw] 3056 out of 38583 Q17 singletons are mated.
+[bwa_paired_sw] 5 out of 2434 Q17 discordant pairs are fixed.
+[bwa_sai2sam_pe_core] time elapses: 0.66 sec
+[bwa_sai2sam_pe_core] refine gapped alignments... 0.24 sec
+[bwa_sai2sam_pe_core] print alignments... 0.58 sec
+[bwa_sai2sam_pe_core] 524288 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_sai2sam_pe_core] convert to sequence coordinate... 
+[infer_isize] (25, 50, 75) percentile: (135, 189, 280)
+[infer_isize] low and high boundaries: 70 and 570 for estimating avg and std
+[infer_isize] inferred external isize from 121198 pairs: 213.740 +/- 98.453
+[infer_isize] skewness: 0.810; kurtosis: 0.014; ap_prior: 1.00e-05
+[infer_isize] inferred maximum insert size: 689 (4.83 sigma)
+[bwa_sai2sam_pe_core] time elapses: 0.91 sec
+[bwa_sai2sam_pe_core] changing coordinates of 0 alignments.
+[bwa_sai2sam_pe_core] align unmapped mate...
+[bwa_paired_sw] 3046 out of 38512 Q17 singletons are mated.
+[bwa_paired_sw] 5 out of 2515 Q17 discordant pairs are fixed.
+[bwa_sai2sam_pe_core] time elapses: 0.68 sec
+[bwa_sai2sam_pe_core] refine gapped alignments... 0.26 sec
+[bwa_sai2sam_pe_core] print alignments... 0.59 sec
+[bwa_sai2sam_pe_core] 786432 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_sai2sam_pe_core] convert to sequence coordinate... 
+[infer_isize] (25, 50, 75) percentile: (136, 189, 280)
+[infer_isize] low and high boundaries: 70 and 568 for estimating avg and std
+[infer_isize] inferred external isize from 112964 pairs: 214.063 +/- 98.128
+[infer_isize] skewness: 0.798; kurtosis: -0.028; ap_prior: 1.00e-05
+[infer_isize] inferred maximum insert size: 688 (4.83 sigma)
+[bwa_sai2sam_pe_core] time elapses: 0.83 sec
+[bwa_sai2sam_pe_core] changing coordinates of 1 alignments.
+[bwa_sai2sam_pe_core] align unmapped mate...
+[bwa_paired_sw] 2888 out of 35888 Q17 singletons are mated.
+[bwa_paired_sw] 5 out of 2268 Q17 discordant pairs are fixed.
+[bwa_sai2sam_pe_core] time elapses: 0.61 sec
+[bwa_sai2sam_pe_core] refine gapped alignments... 0.23 sec
+[bwa_sai2sam_pe_core] print alignments... 0.54 sec
+[bwa_sai2sam_pe_core] 1030583 sequences have been processed.
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa sampe -P -f ./testdata/results/map_vs_ref/110901_6_12_random_1.sam ./testdata/ref/1b_con1_AJ238799.NCBI.fa ./testdata/results/map_vs_ref/110901_6_12_random_1.1.sai ./testdata/results/map_vs_ref/110901_6_12_random_1.2.sai ./testdata/fastq/Sample_110901_6_12_random_1/110901_6_12_random_1_CTTGTA_L006_R1_001.fastq.gz ./testdata/fastq/Sample_110901_6_12_random_1/110901_6_12_random_1_CTTGTA_L006_R2_001.fastq.gz
+[main] Real time: 14.073 sec; CPU: 13.777 sec
+2023-04-13 15:49:53	./map_vs_ref.pl	End generating paired alignment
+2023-04-13 15:49:53	./map_vs_ref.pl	1.5 End.
+2023-04-13 15:49:53	./map_vs_ref.pl	1.4.1 Locate reads ...
+2023-04-13 15:49:53	./map_vs_ref.pl	1.4.2 Map reads for sample [110901_6_12_random_2] ...
+2023-04-13 15:49:53	./map_vs_ref.pl	!---- Paired end mapping using ./testdata/fastq/Sample_110901_6_12_random_2/110901_6_12_random_2_CTTGTA_L006_R1_001.fastq.gz ./testdata/fastq/Sample_110901_6_12_random_2/110901_6_12_random_2_CTTGTA_L006_R2_001.fastq.gz ...
+2023-04-13 15:49:53	./map_vs_ref.pl	Start aligning read
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 183.90 sec
+[bwa_aln_core] write to the disk... 0.03 sec
+[bwa_aln_core] 262144 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 181.77 sec
+[bwa_aln_core] write to the disk... 0.03 sec
+[bwa_aln_core] 524288 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 182.99 sec
+[bwa_aln_core] write to the disk... 0.03 sec
+[bwa_aln_core] 786432 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 170.61 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 1030583 sequences have been processed.
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa aln -t 8 -q 15 -n 12 -k 6 -f ./testdata/results/map_vs_ref/110901_6_12_random_2.1.sai ./testdata/ref/1b_con1_AJ238799.NCBI.fa ./testdata/fastq/Sample_110901_6_12_random_2/110901_6_12_random_2_CTTGTA_L006_R1_001.fastq.gz
+[main] Real time: 95.787 sec; CPU: 721.541 sec
+2023-04-13 15:51:29	./map_vs_ref.pl	End aligning read
+2023-04-13 15:51:29	./map_vs_ref.pl	Start aligning read
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 192.08 sec
+[bwa_aln_core] write to the disk... 0.03 sec
+[bwa_aln_core] 262144 sequences have been processed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 187.04 sec
+[bwa_aln_core] write to the disk... 0.03 sec
+[bwa_aln_core] 524288 sequences have been processed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 187.68 sec
+[bwa_aln_core] write to the disk... 0.03 sec
+[bwa_aln_core] 786432 sequences have been processed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 171.80 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 1030583 sequences have been processed.
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa aln -t 8 -q 15 -n 12 -k 6 -f ./testdata/results/map_vs_ref/110901_6_12_random_2.2.sai ./testdata/ref/1b_con1_AJ238799.NCBI.fa ./testdata/fastq/Sample_110901_6_12_random_2/110901_6_12_random_2_CTTGTA_L006_R2_001.fastq.gz
+[main] Real time: 97.233 sec; CPU: 741.034 sec
+2023-04-13 15:53:06	./map_vs_ref.pl	End aligning read
+2023-04-13 15:53:06	./map_vs_ref.pl	Start generating paired alignment
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_sai2sam_pe_core] convert to sequence coordinate... 
+[infer_isize] (25, 50, 75) percentile: (135, 189, 281)
+[infer_isize] low and high boundaries: 70 and 573 for estimating avg and std
+[infer_isize] inferred external isize from 121942 pairs: 214.029 +/- 98.750
+[infer_isize] skewness: 0.800; kurtosis: -0.010; ap_prior: 1.00e-05
+[infer_isize] inferred maximum insert size: 690 (4.82 sigma)
+[bwa_sai2sam_pe_core] time elapses: 0.89 sec
+[bwa_sai2sam_pe_core] changing coordinates of 1 alignments.
+[bwa_sai2sam_pe_core] align unmapped mate...
+[bwa_paired_sw] 3098 out of 38144 Q17 singletons are mated.
+[bwa_paired_sw] 8 out of 2571 Q17 discordant pairs are fixed.
+[bwa_sai2sam_pe_core] time elapses: 0.65 sec
+[bwa_sai2sam_pe_core] refine gapped alignments... 0.24 sec
+[bwa_sai2sam_pe_core] print alignments... 0.57 sec
+[bwa_sai2sam_pe_core] 262144 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_sai2sam_pe_core] convert to sequence coordinate... 
+[infer_isize] (25, 50, 75) percentile: (135, 189, 280)
+[infer_isize] low and high boundaries: 70 and 570 for estimating avg and std
+[infer_isize] inferred external isize from 121798 pairs: 213.843 +/- 98.613
+[infer_isize] skewness: 0.808; kurtosis: 0.004; ap_prior: 1.00e-05
+[infer_isize] inferred maximum insert size: 690 (4.83 sigma)
+[bwa_sai2sam_pe_core] time elapses: 0.90 sec
+[bwa_sai2sam_pe_core] changing coordinates of 1 alignments.
+[bwa_sai2sam_pe_core] align unmapped mate...
+[bwa_paired_sw] 3056 out of 38583 Q17 singletons are mated.
+[bwa_paired_sw] 5 out of 2434 Q17 discordant pairs are fixed.
+[bwa_sai2sam_pe_core] time elapses: 0.65 sec
+[bwa_sai2sam_pe_core] refine gapped alignments... 0.23 sec
+[bwa_sai2sam_pe_core] print alignments... 0.57 sec
+[bwa_sai2sam_pe_core] 524288 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_sai2sam_pe_core] convert to sequence coordinate... 
+[infer_isize] (25, 50, 75) percentile: (135, 189, 280)
+[infer_isize] low and high boundaries: 70 and 570 for estimating avg and std
+[infer_isize] inferred external isize from 121198 pairs: 213.740 +/- 98.453
+[infer_isize] skewness: 0.810; kurtosis: 0.014; ap_prior: 1.00e-05
+[infer_isize] inferred maximum insert size: 689 (4.83 sigma)
+[bwa_sai2sam_pe_core] time elapses: 0.90 sec
+[bwa_sai2sam_pe_core] changing coordinates of 0 alignments.
+[bwa_sai2sam_pe_core] align unmapped mate...
+[bwa_paired_sw] 3046 out of 38512 Q17 singletons are mated.
+[bwa_paired_sw] 5 out of 2515 Q17 discordant pairs are fixed.
+[bwa_sai2sam_pe_core] time elapses: 0.65 sec
+[bwa_sai2sam_pe_core] refine gapped alignments... 0.23 sec
+[bwa_sai2sam_pe_core] print alignments... 0.57 sec
+[bwa_sai2sam_pe_core] 786432 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_sai2sam_pe_core] convert to sequence coordinate... 
+[infer_isize] (25, 50, 75) percentile: (136, 189, 280)
+[infer_isize] low and high boundaries: 70 and 568 for estimating avg and std
+[infer_isize] inferred external isize from 112964 pairs: 214.063 +/- 98.128
+[infer_isize] skewness: 0.798; kurtosis: -0.028; ap_prior: 1.00e-05
+[infer_isize] inferred maximum insert size: 688 (4.83 sigma)
+[bwa_sai2sam_pe_core] time elapses: 0.81 sec
+[bwa_sai2sam_pe_core] changing coordinates of 1 alignments.
+[bwa_sai2sam_pe_core] align unmapped mate...
+[bwa_paired_sw] 2888 out of 35888 Q17 singletons are mated.
+[bwa_paired_sw] 5 out of 2268 Q17 discordant pairs are fixed.
+[bwa_sai2sam_pe_core] time elapses: 0.61 sec
+[bwa_sai2sam_pe_core] refine gapped alignments... 0.22 sec
+[bwa_sai2sam_pe_core] print alignments... 0.53 sec
+[bwa_sai2sam_pe_core] 1030583 sequences have been processed.
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa sampe -P -f ./testdata/results/map_vs_ref/110901_6_12_random_2.sam ./testdata/ref/1b_con1_AJ238799.NCBI.fa ./testdata/results/map_vs_ref/110901_6_12_random_2.1.sai ./testdata/results/map_vs_ref/110901_6_12_random_2.2.sai ./testdata/fastq/Sample_110901_6_12_random_2/110901_6_12_random_2_CTTGTA_L006_R1_001.fastq.gz ./testdata/fastq/Sample_110901_6_12_random_2/110901_6_12_random_2_CTTGTA_L006_R2_001.fastq.gz
+[main] Real time: 13.640 sec; CPU: 13.254 sec
+2023-04-13 15:53:20	./map_vs_ref.pl	End generating paired alignment
+2023-04-13 15:53:20	./map_vs_ref.pl	1.5 End.
+2023-04-13 15:53:20	./consensus.pl	2.0 Checking command line arguments ...
+2023-04-13 15:53:20	./consensus.pl	2.1 Checking input and output locations ...
+2023-04-13 15:53:20	./consensus.pl	|--- Create local [./testdata/results/consensus] dir ...
+2023-04-13 15:53:20	./consensus.pl	2.2 Load in reference ...
+2023-04-13 15:53:20	./consensus.pl	2.3 Get sample names from file [./testdata/samples.txt]...
+2023-04-13 15:53:20	./consensus.pl	2.4 Calculate consensus ...
+2023-04-13 15:53:20	./consensus.pl	-> for sample [110901_6_12_random_1] ...
+2023-04-13 15:54:19	./consensus.pl	-> for sample [110901_6_12_random_2] ...
+2023-04-13 15:55:23	./consensus.pl	2.5 End.
+2023-04-13 15:55:23	./map_vs_consensus.pl	3.0 Checking command line arguments ...
+2023-04-13 15:55:23	./map_vs_consensus.pl	3.1 Get sample names from file [./testdata/samples.txt]...
+2023-04-13 15:55:23	./map_vs_consensus.pl	3.2 Checking input and output locations ...
+2023-04-13 15:55:23	./map_vs_consensus.pl	3.2.1 Create local [map_vs_consensus]  dir ...
+2023-04-13 15:55:23	./map_vs_consensus.pl	|--- Check fastq dir ...
+2023-04-13 15:55:23	./map_vs_consensus.pl	|--- Check map_vs_consensus dir ...
+2023-04-13 15:55:23	./map_vs_consensus.pl	3.3 Do read mapping and save SAM file ...
+2023-04-13 15:55:23	./map_vs_consensus.pl	3.3.1 Locate reads ...
+2023-04-13 15:55:23	./map_vs_consensus.pl	3.3.2 Locate consensus for [110901_6_12_random_1] ...
+2023-04-13 15:55:23	./map_vs_consensus.pl	3.3.3 Map reads for sample [110901_6_12_random_1] ...
+2023-04-13 15:55:23	./map_vs_consensus.pl	!---- Paired end mapping using ./testdata/fastq/Sample_110901_6_12_random_1/110901_6_12_random_1_CTTGTA_L006_R1_001.fastq.gz ./testdata/fastq/Sample_110901_6_12_random_1/110901_6_12_random_1_CTTGTA_L006_R2_001.fastq.gz ...
+2023-04-13 15:55:23	./map_vs_consensus.pl	bwa start indexing reference ./testdata/results/consensus/110901_6_12_random_1_consensus.fa
+[bwa_index] Pack FASTA... 0.00 sec
+[bwa_index] Construct BWT for the packed sequence...
+[bwa_index] 0.00 seconds elapse.
+[bwa_index] Update BWT... 0.00 sec
+[bwa_index] Pack forward-only FASTA... 0.00 sec
+[bwa_index] Construct SA from BWT and Occ... 0.00 sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa index ./testdata/results/consensus/110901_6_12_random_1_consensus.fa
+[main] Real time: 0.445 sec; CPU: 0.005 sec
+2023-04-13 15:55:24	./map_vs_consensus.pl	Start aligning read
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 173.90 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 262144 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 173.18 sec
+[bwa_aln_core] write to the disk... 0.03 sec
+[bwa_aln_core] 524288 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 173.81 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 786432 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 160.92 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 1030583 sequences have been processed.
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa aln -t 8 -q 15 -n 12 -k 6 -f ./testdata/results/map_vs_consensus/110901_6_12_random_1.1.sai ./testdata/results/consensus/110901_6_12_random_1_consensus.fa ./testdata/fastq/Sample_110901_6_12_random_1/110901_6_12_random_1_CTTGTA_L006_R1_001.fastq.gz
+[main] Real time: 89.784 sec; CPU: 684.000 sec
+2023-04-13 15:56:54	./map_vs_consensus.pl	End aligning read
+2023-04-13 15:56:54	./map_vs_consensus.pl	Start aligning read
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 183.56 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 262144 sequences have been processed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 180.14 sec
+[bwa_aln_core] write to the disk... 0.03 sec
+[bwa_aln_core] 524288 sequences have been processed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 189.09 sec
+[bwa_aln_core] write to the disk... 0.03 sec
+[bwa_aln_core] 786432 sequences have been processed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 175.31 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 1030583 sequences have been processed.
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa aln -t 8 -q 15 -n 12 -k 6 -f ./testdata/results/map_vs_consensus/110901_6_12_random_1.2.sai ./testdata/results/consensus/110901_6_12_random_1_consensus.fa ./testdata/fastq/Sample_110901_6_12_random_1/110901_6_12_random_1_CTTGTA_L006_R2_001.fastq.gz
+[main] Real time: 96.293 sec; CPU: 730.484 sec
+2023-04-13 15:58:30	./map_vs_consensus.pl	End aligning read
+2023-04-13 15:58:30	./map_vs_consensus.pl	Start generating paired alignment
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_sai2sam_pe_core] convert to sequence coordinate... 
+[infer_isize] (25, 50, 75) percentile: (135, 189, 281)
+[infer_isize] low and high boundaries: 70 and 573 for estimating avg and std
+[infer_isize] inferred external isize from 123390 pairs: 213.984 +/- 98.730
+[infer_isize] skewness: 0.802; kurtosis: -0.005; ap_prior: 1.00e-05
+[infer_isize] inferred maximum insert size: 690 (4.82 sigma)
+[bwa_sai2sam_pe_core] time elapses: 0.80 sec
+[bwa_sai2sam_pe_core] changing coordinates of 1 alignments.
+[bwa_sai2sam_pe_core] align unmapped mate...
+[bwa_paired_sw] 2571 out of 37664 Q17 singletons are mated.
+[bwa_paired_sw] 11 out of 2603 Q17 discordant pairs are fixed.
+[bwa_sai2sam_pe_core] time elapses: 0.66 sec
+[bwa_sai2sam_pe_core] refine gapped alignments... 0.27 sec
+[bwa_sai2sam_pe_core] print alignments... 0.58 sec
+[bwa_sai2sam_pe_core] 262144 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_sai2sam_pe_core] convert to sequence coordinate... 
+[infer_isize] (25, 50, 75) percentile: (135, 189, 280)
+[infer_isize] low and high boundaries: 70 and 570 for estimating avg and std
+[infer_isize] inferred external isize from 123264 pairs: 213.704 +/- 98.531
+[infer_isize] skewness: 0.810; kurtosis: 0.009; ap_prior: 1.00e-05
+[infer_isize] inferred maximum insert size: 690 (4.83 sigma)
+[bwa_sai2sam_pe_core] time elapses: 0.67 sec
+[bwa_sai2sam_pe_core] changing coordinates of 0 alignments.
+[bwa_sai2sam_pe_core] align unmapped mate...
+[bwa_paired_sw] 2608 out of 38003 Q17 singletons are mated.
+[bwa_paired_sw] 6 out of 2472 Q17 discordant pairs are fixed.
+[bwa_sai2sam_pe_core] time elapses: 0.65 sec
+[bwa_sai2sam_pe_core] refine gapped alignments... 0.26 sec
+[bwa_sai2sam_pe_core] print alignments... 0.59 sec
+[bwa_sai2sam_pe_core] 524288 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_sai2sam_pe_core] convert to sequence coordinate... 
+[infer_isize] (25, 50, 75) percentile: (135, 189, 280)
+[infer_isize] low and high boundaries: 70 and 570 for estimating avg and std
+[infer_isize] inferred external isize from 122665 pairs: 213.673 +/- 98.437
+[infer_isize] skewness: 0.812; kurtosis: 0.020; ap_prior: 1.00e-05
+[infer_isize] inferred maximum insert size: 689 (4.83 sigma)
+[bwa_sai2sam_pe_core] time elapses: 0.74 sec
+[bwa_sai2sam_pe_core] changing coordinates of 0 alignments.
+[bwa_sai2sam_pe_core] align unmapped mate...
+[bwa_paired_sw] 2515 out of 38007 Q17 singletons are mated.
+[bwa_paired_sw] 6 out of 2547 Q17 discordant pairs are fixed.
+[bwa_sai2sam_pe_core] time elapses: 0.65 sec
+[bwa_sai2sam_pe_core] refine gapped alignments... 0.26 sec
+[bwa_sai2sam_pe_core] print alignments... 0.57 sec
+[bwa_sai2sam_pe_core] 786432 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_sai2sam_pe_core] convert to sequence coordinate... 
+[infer_isize] (25, 50, 75) percentile: (136, 189, 280)
+[infer_isize] low and high boundaries: 70 and 568 for estimating avg and std
+[infer_isize] inferred external isize from 114313 pairs: 214.013 +/- 98.088
+[infer_isize] skewness: 0.799; kurtosis: -0.024; ap_prior: 1.00e-05
+[infer_isize] inferred maximum insert size: 688 (4.83 sigma)
+[bwa_sai2sam_pe_core] time elapses: 0.61 sec
+[bwa_sai2sam_pe_core] changing coordinates of 0 alignments.
+[bwa_sai2sam_pe_core] align unmapped mate...
+[bwa_paired_sw] 2494 out of 35365 Q17 singletons are mated.
+[bwa_paired_sw] 5 out of 2306 Q17 discordant pairs are fixed.
+[bwa_sai2sam_pe_core] time elapses: 0.67 sec
+[bwa_sai2sam_pe_core] refine gapped alignments... 0.24 sec
+[bwa_sai2sam_pe_core] print alignments... 0.53 sec
+[bwa_sai2sam_pe_core] 1030583 sequences have been processed.
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa sampe -P -f ./testdata/results/map_vs_consensus/110901_6_12_random_1.sam ./testdata/results/consensus/110901_6_12_random_1_consensus.fa ./testdata/results/map_vs_consensus/110901_6_12_random_1.1.sai ./testdata/results/map_vs_consensus/110901_6_12_random_1.2.sai ./testdata/fastq/Sample_110901_6_12_random_1/110901_6_12_random_1_CTTGTA_L006_R1_001.fastq.gz ./testdata/fastq/Sample_110901_6_12_random_1/110901_6_12_random_1_CTTGTA_L006_R2_001.fastq.gz
+[main] Real time: 13.260 sec; CPU: 12.921 sec
+2023-04-13 15:58:43	./map_vs_consensus.pl	End generating paired alignment
+2023-04-13 15:58:43	./map_vs_consensus.pl	3.4 End.
+2023-04-13 15:58:43	./map_vs_consensus.pl	3.3.1 Locate reads ...
+2023-04-13 15:58:43	./map_vs_consensus.pl	3.3.2 Locate consensus for [110901_6_12_random_2] ...
+2023-04-13 15:58:43	./map_vs_consensus.pl	3.3.3 Map reads for sample [110901_6_12_random_2] ...
+2023-04-13 15:58:43	./map_vs_consensus.pl	!---- Paired end mapping using ./testdata/fastq/Sample_110901_6_12_random_2/110901_6_12_random_2_CTTGTA_L006_R1_001.fastq.gz ./testdata/fastq/Sample_110901_6_12_random_2/110901_6_12_random_2_CTTGTA_L006_R2_001.fastq.gz ...
+2023-04-13 15:58:43	./map_vs_consensus.pl	bwa start indexing reference ./testdata/results/consensus/110901_6_12_random_2_consensus.fa
+[bwa_index] Pack FASTA... 0.00 sec
+[bwa_index] Construct BWT for the packed sequence...
+[bwa_index] 0.00 seconds elapse.
+[bwa_index] Update BWT... 0.00 sec
+[bwa_index] Pack forward-only FASTA... 0.00 sec
+[bwa_index] Construct SA from BWT and Occ... 0.00 sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa index ./testdata/results/consensus/110901_6_12_random_2_consensus.fa
+[main] Real time: 0.421 sec; CPU: 0.005 sec
+2023-04-13 15:58:44	./map_vs_consensus.pl	Start aligning read
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 182.28 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 262144 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 179.97 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 524288 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 173.48 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 786432 sequences have been processed.
+[bwa_read_seq] 1.8% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 160.66 sec
+[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] 1030583 sequences have been processed.
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa aln -t 8 -q 15 -n 12 -k 6 -f ./testdata/results/map_vs_consensus/110901_6_12_random_2.1.sai ./testdata/results/consensus/110901_6_12_random_2_consensus.fa ./testdata/fastq/Sample_110901_6_12_random_2/110901_6_12_random_2_CTTGTA_L006_R1_001.fastq.gz
+[main] Real time: 91.717 sec; CPU: 698.572 sec
+2023-04-13 16:00:15	./map_vs_consensus.pl	End aligning read
+2023-04-13 16:00:15	./map_vs_consensus.pl	Start aligning read
+[bwa_read_seq] 7.9% bases are trimmed.
+[bwa_aln_core] calculate SA coordinate... 2023-04-13 16:00:33	./map_vs_consensus.pl	End aligning read
+2023-04-13 16:00:33	./map_vs_consensus.pl	Start generating paired alignment
+[fread] Unexpected end of file
+2023-04-13 16:00:33	./map_vs_consensus.pl	End generating paired alignment
+2023-04-13 16:00:33	./map_vs_consensus.pl	3.4 End.
+2023-04-13 16:00:33	./codon_table.pl	4.0 Checking command line arguments ...
+2023-04-13 16:00:33	./codon_table.pl	4.1 Checking input and output locations ...
+2023-04-13 16:00:33	./codon_table.pl	|--- Check input dir ...
+2023-04-13 16:00:33	./codon_table.pl	|--- Check project dir ...
+2023-04-13 16:00:33	./codon_table.pl	4.2 Get sample names from file [./testdata/samples.txt]...
+2023-04-13 16:00:33	./codon_table.pl	4.3 Build Codon Table ...

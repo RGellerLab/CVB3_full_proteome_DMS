@@ -1,0 +1,26 @@
+{
+    "id": "542A2809",
+    "path": "~/Dropbox/BAR/CVB3_P1P2P3_dms/P1P2P3_manuscript/github/B.Scripts_and_bioinformatic_pipelines/B3.codon_tables_to_MFE/scripts/4.scripts_plot_and_merge_mfe.R",
+    "project_path": null,
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1709810214354.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "470,15",
+        "scrollLine": "462"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1709295074,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1709295074,
+    "read_only": false,
+    "read_only_alternatives": []
+}

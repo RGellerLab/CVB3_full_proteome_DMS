@@ -1,0 +1,26 @@
+{
+    "id": "A0DAF744",
+    "path": "~/Dropbox/BAR/CVB3_P1P2P3_dms/P1P2P3_manuscript/github/B.Scripts_and_bioinformatic_pipelines/B4.correction_MFEs/scripts/correct_mfes.R",
+    "project_path": "correct_mfes.R",
+    "type": "r_source",
+    "hash": "3281013989",
+    "contents": "",
+    "dirty": true,
+    "created": 1709808467190.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "172,5",
+        "scrollLine": "150"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1709046578,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1709808480992,
+    "read_only": false,
+    "read_only_alternatives": []
+}

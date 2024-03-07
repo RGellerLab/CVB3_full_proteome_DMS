@@ -1,0 +1,24 @@
+{
+    "id": "C1813A7C",
+    "path": "C:/Users/Bea/Dropbox/BAR/CVB3_P1P2P3_dms/P1P2P3_manuscript/github/B.Scripts_and_bioinformatic_pipelines/B1.DMS_oligo_design_pipeline/Scripts/4.map_to_ref.R",
+    "project_path": "4.map_to_ref.R",
+    "type": "r_source",
+    "hash": "2772310120",
+    "contents": "",
+    "dirty": false,
+    "created": 1709803786553.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1708613430,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1708613430,
+    "read_only": false,
+    "read_only_alternatives": []
+}

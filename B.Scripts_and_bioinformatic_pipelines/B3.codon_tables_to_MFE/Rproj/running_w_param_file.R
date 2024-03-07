@@ -1,0 +1,306 @@
+
+
+#Select region to run
+# region="p1"
+region="p2"
+# region="p3"
+
+
+###############
+source(paste0("./parameter_file_",region,".R"))
+source(paste0(path.to.scripts,"/scripts/1.scripts_virvar_codon_table.R"))
+
+#########
+## collapses multiple codon tables into 1
+## output is in paste0("../results_",region,"/unfiltered/collapsed_codon_files/")
+## and dels are in paste0("../results_",region,"/unfiltered/collapsed_deletion_files/")
+step1.collapse_codon_files(codon.dir=codon.dir, ## where are the codons
+                           out.dir = paste0("../results_",region,"/unfiltered/collapsed_codon_files/"),
+                           out.dir.dels = paste0("../results_",region,"/unfiltered/collapsed_deletion_files/"),
+                           prefix ="sscs.codon" # to remove from the name of the file
+)
+
+############
+# filters codon table to split muts and dels
+## output is in paste0("../results_",region,"/unfiltered/")
+step2.get_codon_tables(data.dir= paste0("../results_",region,"/unfiltered/collapsed_codon_files/"),
+                       aa.fragment.length = aa.length, ## length, defined in param file
+                       out.directory.results=paste0("../results_",region,"/unfiltered/"),
+                       fasta.reference = fasta.reference.path,
+                       rename=F, # if you have a conversion file for renaming
+                       name.file = name.conversion.file, # the file for renaming, needs name and ref.name
+                       strand.test.method="SOR",
+                       SOR.cut.value=sor.cutoff
+)
+
+rm(step2.get_codon_tables)
+
+
+############
+##p1
+## filters single muts per codon 
+
+if(region=="p1"){
+step2b.filter_single_codons(min.cov=0,## keep this as 0 usually since filter later
+                            codon.identity.matrix=codon.identity.file, 
+                            data.dir=paste0("../results_",region,"/unfiltered/codon_tables/"),
+                            out.dir=paste0("../results_",region,"/filter_single_mutants/codon_files/")
+                            )
+
+
+rm(step2b.filter_single_codons)}
+
+
+
+# 
+if(region=="p2"|region=="p3"){
+#filter expected codons
+step2b.filter_expected(data.dir = paste0("../results_",region,"/unfiltered/codon_tables/"),
+                       out.dir = paste0("../results_",region,"/filter_expected/codon_files/"),
+                       out.dir2 = paste0("../results_",region,"/filter_not_expected/codon_files/"),
+                       muts.introduced = mutations.introduced )
+
+rm(step2b.filter_expected)}
+
+
+#######################
+## filters synonymous
+#outdirectory is out.dir=paste0("../results_",region,"/filter_expected/"),
+step2c.filter_syn(codon.identity=codon.identity.file,
+                  data.dir=paste0(paste0("../results_",region,"/",working.dir,"/codon_files/")),
+                  out.dir=paste0(paste0("../results_",region,"/",working.dir,"/"))
+)
+
+
+rm(step2c.filter_syn)
+#
+if(region=="p2"|region=="p3"){
+step3.filter_dels(min.cov=1,
+                  max.sor=4,
+                  wd=paste0("../results_",region,"/unfiltered/collapsed_deletion_files/"),
+                  wt.wd=paste0("../results_",region,"/unfiltered/codon_tables/"),
+                  out.dir=paste0("../results_",region,"/unfiltered/deletions/"),
+                  rename=F,
+                  name.file=name.conversion.file)
+rm(step3.filter_dels)}
+
+
+# remove all functions here
+rm(virvarseq_to_codon_table,SOR)
+
+#########################################################
+source(paste0("./parameter_file_",region,".R"))
+source(paste0(path.to.scripts,"/scripts/2.scripts_stats.R"))
+##1.analyzes codon table
+## out put to out.dir=paste0("../results_",region,"/analyze_codon_tables/"),
+analyze_codon_table(data.dir = paste0(paste0("../results_",region,"/",working.dir,"/codon_files/")),
+                      out.dir =paste0("../results_",region,"/analyze_codon_tables/"), 
+                      filter.positions=filter.positions,
+                      start=AA.start.mut,
+                      end=AA.end.mut,
+                      correct.position=correct.position,
+                      aa.pos.correct=startAApos,
+                      min_reads=min_reads)
+
+
+##2.combines the stats from all files into 1 place
+# out file out is paste0("../results_",region,"/analyze_codon_tables/")
+combine_stats(dir.files = paste0("../results_",region,"/analyze_codon_tables/stats/"),
+              out.dir = paste0("../results_",region,"/sum/"))
+
+
+##3.plots stats
+plot_stats(stat.file=paste0("../results_",region,"/sum/summary.stats.csv"),
+           out.dir=paste0("../results_",region,"/sum/"),
+           clean.name.pattern=".csv")
+
+rm(analyze_codon_table,combine_stats,plot_stats)
+
+
+
+#################
+source(paste0("./parameter_file_",region,".R"))
+source(paste0(path.to.scripts,"/scripts/3.scripts_mfe.R"))
+## gets enrichment for mutations
+# out dir is out.dir=paste0("../results_",region,"/analyze/mfe/muts/")
+# !!! data dir will change depending on if analyze expected or filter single
+get_enrich_ratio(condition.file=comparison.file,
+                 out.dir = paste0("../results_",region,"/analyze/mfe/deads_not_marked/"),
+                 data.dir=paste0(paste0("../results_",region,"/",working.dir,"/codon_files/")),
+                 pseudo=pseudo.count,
+                 min.cov.pre.or.post = min.cov.pre.or.post,
+                 min.cov.pre=min.cov.pre,
+                 rm.stops=rm.stops,
+                 filter.position=filter.positions,
+                 start=AA.start.mut,
+                 end=AA.end.mut,
+                 correct.start.pos=correct.position,
+                 aa.pos.correct=startAApos,
+                 mark.deads=F)
+
+# #mark deads TRUE to mark deads as -20
+# get_enrich_ratio(condition.file=comparison.file,
+#                  out.dir = paste0("../results_",region,"/analyze/mfe/deads_marked/"),
+#                  data.dir=paste0(paste0("../results_",region,"/",working.dir,"/codon_files/")),
+#                  pseudo=pseudo.count,
+#                  min.cov.pre.or.post = min.cov.pre.or.post,
+#                  min.cov.pre=min.cov.pre,
+#                  rm.stops=rm.stops,
+#                  filter.position=filter.positions,
+#                  start=AA.start.mut,
+#                  end=AA.end.mut,
+#                  correct.start.pos=correct.position,
+#                  aa.pos.correct=startAApos,
+#                  mark.deads=T)
+
+rm(get_enrich_ratio)
+
+get_enrich_syn(condition.file=comparison.file,
+               data.dir=paste0(paste0("../results_",region,"/",working.dir,"/syn/")),
+               out.dir=paste0("../results_",region,"/analyze/mfe/syn/"),
+               pseudo=pseudo.count,
+               min.cov.pre.or.post = min.cov.pre.or.post,
+               min.cov.pre=min.cov.pre,
+               rm.pre.zero=T,
+               rm.stops=rm.stops,
+               filter.position=filter.positions,
+               start=AA.start.mut,
+               end=AA.end.mut,
+               correct.start.pos=correct.position,
+               aa.pos.correct=startAApos)
+
+
+rm(get_enrich_syn)
+
+#BAR OCTOBER 2023
+get_enrich_stops(condition.file=comparison.file,
+                 out.dir = paste0("../results_",region,"/analyze/mfe/stops/"),
+                 data.dir=paste0(paste0("../results_",region,"/",working.dir,"/codon_files/")),
+                 pseudo=pseudo.count,
+                 min.cov.pre.or.post = min.cov.pre.or.post.stops,
+                 min.cov.pre=min.cov.pre,
+                 filter.position=filter.positions,
+                 start=AA.start.mut,
+                 end=AA.end.mut,
+                 correct.start.pos=correct.position,
+                 aa.pos.correct=startAApos)
+rm(get_enrich_stops)
+
+if(region=="p2"|region=="p3"){
+##can be ran with deads.marked=T to mark deads as -20s
+get_enrich_del(out.dir=paste0("../results_",region,"/analyze/mfe/dels/"),
+               data.dir=paste0("../results_",region,"/unfiltered/deletions/"),
+               condition.file=comparison.file,
+               pseudo=pseudo.count,
+               min.cov.pre.or.post = min.cov.pre.or.post,
+               min.cov.pre=min.cov.pre,
+               filter.position=filter.positions,
+               start=AA.start.mut,
+               end=AA.end.mut,
+               correct.start.pos=correct.position,
+               aa.pos.correct=startAApos)
+ 
+
+
+rm(get_enrich_del)}
+
+############# BAR FUNCTIONS ###############################
+####### MFE FUNCTIONS #######################
+## combine all the mfe files, get averages and plots 
+### correl matrix
+### correl plots
+### lineplots (only for site mfe)
+
+source(paste0("./parameter_file_",region,".R"))
+source(paste0(path.to.scripts,"/scripts/4.scripts_plot_and_merge_mfe.R"))
+
+
+vars <- colnames(read.csv(comparison.file))[4:length(colnames(read.csv(comparison.file)))]
+
+#deads_not_marked directory
+for (i in c(1:length(vars))){
+  combine_mutmfe(data.dir=paste0("../results_",region,"/analyze/mfe/deads_not_marked/"),
+                 condition.file=comparison.file,
+                 out.dir=paste0("../results_",region,"/combined_mfe/mutmfe/"),
+                 group=vars[i])}
+
+  rm(combine_mutmfe)
+ 
+# #deads_marked directory - will keep -20s
+# for (i in c(1:length(vars))){
+# combine_mutmfe_deads_marked(data.dir=paste0("../results_",region,"/analyze/mfe/deads_marked/"),
+#                             condition.file=comparison.file,
+#                             out.dir=paste0("../results_",region,"/combined_mfe_deads_marked/mutmfe/"),
+#                             group=vars[i])}
+#   rm(combine_mutmfe_deads_marked)
+
+#get avg by site and combine
+for (i in c(1:length(vars))){
+  combine_sitemfe(data.dir=paste0("../results_",region,"/analyze/mfe/deads_not_marked/"),
+                  condition.file=comparison.file,
+                  out.dir=paste0("../results_",region,"/combined_mfe/sitemfe/"),
+                  group=vars[i])}
+  rm(combine_sitemfe)
+
+#get avg syn mfe 
+for (i in c(1:length(vars))){
+  combine_synmfe(data.dir=paste0("../results_",region,"/analyze/mfe/syn/"),
+                 condition.file=comparison.file,
+                 out.dir=paste0("../results_",region,"/combined_mfe/synmfe/"),
+                 group=vars[i])}
+  
+  rm(combine_synmfe)
+
+#get avg dels mfe 
+if(region=="p2"|region=="p3"){
+for (i in c(1:length(vars))){
+    combine_delsmfe(data.dir=paste0("../results_",region,"/analyze/mfe/dels/"),
+                   condition.file=comparison.file,
+                   out.dir=paste0("../results_",region,"/combined_mfe/delsmfe/"),
+                   group=vars[i])}
+  
+  rm(combine_delsmfe)}
+# #get avg stop mfe 
+# for (i in c(1:length(vars))){
+#   combine_stopsmfe(data.dir=paste0("../results_",region,"/analyze/mfe/stops/"),
+#                    condition.file=comparison.file,
+#                    out.dir=paste0("../results_",region,"/combined_mfe/stopsmfe/"),
+#                    group=vars[i])}
+#   rm(combine_stopsmfe)
+# 
+# rm(vars)
+# 
+
+############# BAR FUNCTIONS ###############################
+####### DIFFERENTIAL SELECTION FUNCTIONS #######################
+## gets positive and negative differential selection per mut and site ###
+### gets averages and plots:
+### correl matrix
+### correl plots
+### lineplots
+# 
+# 
+# source(paste0(path.to.scripts,"/scripts/5.scripts_plot_and_merge_diffsel.R"))
+# source(paste0("./parameter_file_",region,".R"))
+# 
+# vars <- colnames(read.csv(comparison.file))[4:length(colnames(read.csv(comparison.file)))]
+# 
+# 
+# for (i in c(1:length(vars))){
+#   get_mutdifsel(data.dir=paste0("../results_",region,"/analyze/mfe/deads_not_marked/"),
+#                 condition.file=comparison.file,
+#                 out.dir=paste0("../results_",region,"/combined_difsel/mutdifsel/"),
+#                 group=vars[i])}
+# 
+# rm(get_mutdifsel)
+# 
+# for (i in c(1:length(vars))){
+#   get_sitedifsel(data.dir=paste0("../results_",region,"/analyze/mfe/deads_not_marked/"),
+#                  condition.file=comparison.file,
+#                  out.dir=paste0("../results_",region,"/combined_difsel/sitedifsel/"),
+#                  group=vars[i],
+#                  mean.or.median=mean.or.median.cutoff,
+#                  sd.times=sd.times.cutoff)}
+# 
+# rm(get_sitedifsel)
+

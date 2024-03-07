@@ -1,0 +1,389 @@
+
+library(tidyverse)
+library(ggpubr)
+
+#read dels
+delsp2=read_csv("../../p2_region/results/combined_mfe/delsmfe_deads_marked/per_passage/delsmfe_per_passage.csv")
+delsp2=delsp2 %>% select(site, "wtAA"=wildtype, "passage2"=rP2_passage2)
+delsp3=read_csv("../../p3_region/results/combined_mfe/delsmfe_deads_marked/per_passage/delsmfe_per_passage.csv")
+delsp3=delsp3 %>% select(site, "wtAA"=wildtype, "passage2"=rP3_passage2)
+
+# Read p3 data
+p3=read_csv("../../p3_region/results/combined_mfe_deads_marked/mutmfe/per_passage/mutmfe_per_passage.csv")
+p3=p3 %>% select(site, wtAA, mutAA, rP3_passage2)
+p3overlap=p3 %>% filter(site %in% c(1416:1434))
+
+p2=read.csv("../../p2_region/results/combined_mfe_deads_marked/mutmfe/per_passage/mutmfe_per_passage.csv")
+p2overlap=p2 %>% filter(site %in% c(1416:1434))
+
+p2p3=p2overlap %>% left_join(p3overlap, by=c("site","wtAA","mutAA"))
+p2p3$rP2_passage2[p2p3$rP2_passage2==-20]=NA
+p2p3$rP3_passage2[p2p3$rP3_passage2==-20]=NA
+p2p3=p2p3 %>% filter(!wtAA==mutAA)
+
+lmp2p3=summary(lm(rP2_passage2 ~ rP3_passage2, data = p2p3))
+ggplot(p2p3, aes(x=rP2_passage2, y=rP3_passage2)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm", colour="black") +
+  # stat_cor(method = "pearson", size=4)+
+  annotate("text", x = -4, y = 2, label = paste0("R2=", round(lmp2p3$r.squared, 2)))+
+  theme_classic()
+
+
+# ggsave(plot=last_plot(),"pdfs/p2p3_overlap_plot.pdf", scale=1.5)
+
+summary(lm(rP2_passage2 ~ rP3_passage2, data = p2p3))
+coef_p2_lm<-coef(lm(rP2_passage2 ~ rP3_passage2, data = p2p3))
+
+#correct overlap to check
+p2p3$rP3_cor_passage2 = coef_p2_lm[[1]] + (coef_p2_lm[[2]] * p2p3$rP3_passage2)
+
+#correct P1 region
+p3$rP3_cor_passage2 = coef_p2_lm[[1]] + (coef_p2_lm[[2]] * p3$rP3_passage2)
+
+#correct P2 dels
+delsp3$cor_passage2 = coef_p2_lm[[1]] + (coef_p2_lm[[2]] * delsp3$passage2)
+
+#check correction
+summary(lm(rP2_passage2~rP3_cor_passage2, data = p2p3))
+ggplot(p2p3, aes(x=rP3_cor_passage2, y=rP2_passage2)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm", colour="black") +
+  stat_cor(method = "pearson", size=4)+
+  theme_classic()
+
+wilcox.test( p2p3$rP3_passage2,p2p3$rP2_passage2, paired=T)
+wilcox.test( p2p3$rP3_cor_passage2,p2p3$rP2_passage2, paired=T)
+
+noncor=p2p3 %>% select(rP3_passage2, rP2_passage2)
+noncor=noncor %>% pivot_longer(cols=1:2, names_to="condition", values_to="value")
+ggplot(noncor, aes(x=value, fill=condition)) + 
+  geom_density(alpha=0.5)
+cor=p2p3 %>% select(rP3_cor_passage2, rP2_passage2)
+cor=cor %>% pivot_longer(cols=1:2, names_to="condition", values_to="value")
+ggplot(cor, aes(x=value, fill=condition)) + 
+  geom_density(alpha=0.5)
+
+p3=p3 %>% select(site, wtAA, mutAA, rP3_passage2,rP3_cor_passage2)
+
+rm(cor, noncor, p2p3, p2overlap,p3overlap,coef_P2_lm,lmp2p3)
+#########################################################################
+#Do the same for P1 overlap with LOG
+
+p2overlap=p2 %>% filter(site %in% c(847:851))
+
+p1=read.csv("../../p1_region_BAR/results/combined_mfe_deads_marked/mutmfe/per_passage/mutmfe_per_passage.csv")
+
+p1overlap=p1 %>% filter(site %in% c(847:851))
+
+p1p2=p1overlap %>% left_join(p2overlap, by=c("site","wtAA","mutAA"))
+
+p1p2$rP1_passage2[p1p2$rP1_passage2==-20]=NA
+p1p2$rP2_passage2[p1p2$rP2_passage2==-20]=NA
+p1p2=p1p2 %>% filter(!wtAA==mutAA)
+
+lmp1p2=summary(lm((rP2_passage2) ~ (rP1_passage2), data = p1p2))
+
+ggplot(p1p2, aes(x=rP1_passage2, y=rP2_passage2)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm", colour="black") +
+  # stat_cor(method = "pearson", size=4)+
+  annotate("text", x = -6, y = 2, label = paste0("R2=", round(lmp1p2$adj.r.squared, 2)))+
+  theme_classic()
+
+
+# ggsave(plot=last_plot(),"pdfs/p1p2_overlap_plot.pdf", scale=1.5)
+
+coef_P1_lm<-coef(lm((rP2_passage2) ~ (rP1_passage2), data = p1p2))
+
+#correct overlap to check
+p1p2$rP1_cor_passage2=coef_P1_lm[[1]] + (coef_P1_lm[[2]] * (p1p2$rP1_passage2))
+
+#correct P1 region
+p1$rP1_cor_passage2 =coef_P1_lm[[1]] + (coef_P1_lm[[2]] * (p1$rP1_passage2))
+
+#check correction
+summary(lm(rP2_passage2 ~ rP1_cor_passage2, data = p1p2))
+ggplot(p1p2, aes(x=rP1_cor_passage2, y=rP2_passage2)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm", colour="black") +
+  stat_cor(method = "pearson", size=4)+
+  theme_classic()
+
+wilcox.test( p1p2$rP2_passage2,p1p2$rP1_passage2, paired=T)
+wilcox.test( p1p2$rP2_passage2,p1p2$rP1_cor_passage2, paired=T)
+
+noncor=p1p2 %>% select(rP1_passage2, rP2_passage2)
+noncor=noncor %>% pivot_longer(cols=1:2, names_to="condition", values_to="value")
+ggplot(noncor, aes(x=value, fill=condition)) + 
+  geom_density(alpha=0.5)
+cor=p1p2 %>% select(rP1_cor_passage2, rP2_passage2)
+cor=cor %>% pivot_longer(cols=1:2, names_to="condition", values_to="value")
+ggplot(cor, aes(x=value, fill=condition)) + 
+  geom_density(alpha=0.5)
+
+p1=p1 %>% select(site, wtAA, mutAA, rP1_passage2,rP1_cor_passage2)
+
+rm(cor, noncor, p1p2, p2overlap,p1overlap,coef_P1_lm, lmp1p2)
+########################################################################
+
+library(RColorBrewer)
+library(scales)
+hmcols<-colorRampPalette(c("red","white","blue"))(256)
+hmcol<-rev(brewer.pal(11,"RdBu"))
+library(ggh4x)
+library(ggcorrplot)
+library(ggpubr)
+library(gridExtra)
+
+p1=p1 %>% select(site, wtAA, mutAA, "passage2"=rP1_passage2,"cor_passage2"=rP1_cor_passage2)
+p1$cor_passage2[p1$passage2==-20]=-20
+p1=p1 %>%filter(site %in% c(1:851))
+
+p2=p2 %>% select(site, wtAA, mutAA, "passage2"=rP2_passage2,"cor_passage2"=rP2_passage2)
+p2$cor_passage2[p2$passage2==-20]=-20
+p2=p2 %>%filter(site %in% c(852:1429))
+
+p3=p3 %>% select(site, wtAA, mutAA, "passage2"=rP3_passage2,"cor_passage2"=rP3_cor_passage2)
+p3$cor_passage2[p3$passage2==-20]=-20
+p3=p3 %>%filter(site %in% c(1430:2185))
+mfes=rbind(p1,p2)
+mfes=rbind(mfes,p3)
+
+#merge dels
+delsp1=p1 %>% group_by(site,wtAA) %>% summarise()
+delsp1$passage2=NA
+delsp1$cor_passage2=NA
+delsp1$mutAA="del"
+
+delsp2$cor_passage2=delsp2$passage2
+delsp2=delsp2 %>% select(site, "passage2","cor_passage2")
+delsp2$cor_passage2[delsp2$passage2==-20]=-20
+delsp2=delsp2 %>%filter(site %in% c(852:1429))
+delsp2$mutAA="del"
+delsp2=delsp2 %>% left_join(unique(p2[,c(1:2)]), by="site")
+
+delsp3=delsp3 %>% select(site,"passage2","cor_passage2")
+delsp3$cor_passage2[delsp3$passage2==-20]=-20
+delsp3=delsp3 %>%filter(site %in% c(1430:2185))
+delsp3$mutAA="del"
+delsp3=delsp3 %>% left_join(unique(p3[,c(1:2)]), by="site")
+
+dels=rbind(delsp1,delsp2)
+dels=rbind(dels,delsp3)
+
+rm(p1,p2,p3, delsp1,delsp2,delsp3)
+#join data
+mfes=rbind(mfes,dels)
+
+#add info on precursor, prot
+ref=read_csv("../cvb3_AA_master.csv") %>% 
+  select(site, precursor=precursor_protein, indiv_prot)
+# join
+df=full_join(mfes,ref,by="site")
+
+### order by type
+aliph=c("M","A","I","L","V")
+arom=c("F","W","Y")
+neut=c("N","C","Q","S","T")
+acid=c("E","D")
+base=c("H","K","R") ## can move H to arom
+unique=c("G","P")
+del=("del")
+ord=c(aliph,arom,neut,acid,base,unique,del)
+df$mutation=factor(df$mutAA,levels = ord)
+rm(aliph,arom,neut,acid,base,unique,del)
+
+#plot heatmap
+column_name="cor_passage2"
+
+dfplot <- df
+
+# Calculate min and max values
+min_cor_mfe <- min(dfplot[[column_name]][dfplot[[column_name]] > -20], na.rm = TRUE)
+max_cor_mfe <- max(dfplot[[column_name]], na.rm = TRUE)
+
+# Replace -20 values for minimum mfe
+dfplot[[column_name]][dfplot[[column_name]] == -20] <- (min_cor_mfe)
+dfplot[[column_name]][dfplot$wtAA==dfplot$mutAA] <- 0
+
+# Create ggplot object
+ggplot(dfplot, aes(site, mutation)) + 
+  geom_raster(aes(fill = dfplot[[column_name]])) + 
+  scale_fill_gradientn(colours = hmcol, 
+                       values = rescale(c((min_cor_mfe),1,(max_cor_mfe))), 
+                       space = "Lab",
+                       limits = c((min_cor_mfe), (max_cor_mfe)),
+                       breaks = seq((min_cor_mfe), (max_cor_mfe), by = 1.0),
+                       na.value = "gray", 
+                       guide = "colourbar", aesthetics = c("colour", "fill")) +
+  guides(fill = guide_colourbar(ticks = FALSE, title = "")) +
+  scale_x_continuous(expand = c(0, 0), name = "site") + 
+  scale_y_discrete(expand = c(0, 0), name = "mutation") +
+  theme_classic() +
+  facet_wrap(. ~ precursor, nrow = 3, scales = "free") +
+  ggtitle(paste("Plot for", column_name))  # Add a title
+
+
+#density plot per region or prot
+dfnew<- df
+dfnew$cor_passage2[dfnew$cor_passage2==-20]=NA
+dfnew=dfnew %>% filter(!wtAA==mutAA)
+ggplot(dfnew, aes(x=cor_passage2, fill=precursor)) + 
+  geom_density(alpha=0.5)+
+  facet_wrap(.~indiv_prot)+
+  geom_vline(xintercept = 1)
+
+rm(dfnew,dfplot)
+#######################################################################
+
+#correct data with mCherry model
+mfes=df
+mfes$mutation=paste0(mfes$wtAA, mfes$site, mfes$mutAA)
+data=read.csv("../filtered_comp_assay_dataset.csv") %>% select(mutation, region, avg_norm_t20_t8,sd_norm_t20_t8,by)
+
+# data=read.csv("../avg_competition_assay_data.csv")
+data=data %>% left_join(mfes, by="mutation")
+data=data %>% filter(!cor_passage2==-20)
+
+#fit lm to experimental data
+ggplot(data, aes(x=(cor_passage2), y=log2(avg_norm_t20_t8)))+
+  geom_point()+
+  geom_smooth(method = "lm", colour="black") +
+  stat_cor(method = "spearman", size=4)+
+  theme_classic()
+
+summary(lm(log2(avg_norm_t20_t8) ~ (cor_passage2), data = data))
+
+
+  # Fit Linear Model for passage2 in the current region
+  lm_model_passage2 <- lm(log2(avg_norm_t20_t8) ~ cor_passage2, data = data)
+  
+  # Get Cook's distance 
+  cooksd_passage2 <- cooks.distance(lm_model_passage2)
+  
+  # Identify outliers based on Cook's distance for passage2
+  outliers_passage2 <- which(cooksd_passage2 >4 / length(cooksd_passage2))
+  
+  # Create a subset without outliers for passage2
+  if(length(outliers_passage2)>1){
+    data_no_outliers_passage2 <- data[-outliers_passage2,]
+  }else{data_no_outliers_passage2=data}
+  #lm without outliers
+  lm_model_passage2 <- (lm(log2(avg_norm_t20_t8) ~ cor_passage2, data = data_no_outliers_passage2))
+  
+  # Plot the data without outliers for passage2
+  ggplot(data_no_outliers_passage2, aes(x=cor_passage2, y=log2(avg_norm_t20_t8), color=region))+
+    geom_point()+
+    geom_smooth(method = "lm", colour="black") +
+    # stat_cor(method = "pearson",  size=4)+
+    theme_classic()+
+    # geom_text(aes(label = mutation), vjust = 3, size=3.5, check_overlap = T)+
+    labs(title = paste("Linear Model for - Passage 2 (No Outliers)")
+    )+
+    annotate("text", x = -1.5, y = 1, label = paste0("R2=", round(summary(lm_model_passage2)$adj.r.squared, 2)))
+  
+  
+  # ggsave(plot=last_plot(),"pdfs/lm_experimental_data.pdf", scale=1.5)
+  
+  # Get coefficients for passage2
+  coefficients_passage2 <- coef(lm_model_passage2)
+  
+
+##################################################################################
+#apply lm to data and plot heatmap
+  
+  #lm witout outliers
+  df$cor_lm_passage2=coefficients_passage2[1]+coefficients_passage2[2]*df$cor_passage2
+  df$cor_lm_passage2[df$cor_passage2==-20]=-20
+  df$cor_lm_passage2[df$wtAA==df$mutAA]=0
+  mutorder=factor(unique(df$mutAA), levels=c(unique(df$mutAA[df$mutAA != "del"]),"del"))
+  df=df %>%  arrange(site, factor(mutAA, levels= mutorder))
+  
+  #heatmap
+  dfplot <- df
+  column_name="cor_lm_passage2"
+  
+  # Calculate min and max values
+  min_cor_mfe <- min(dfplot[[column_name]][dfplot[[column_name]] > -20], na.rm = TRUE)
+  max_cor_mfe <- max(dfplot[[column_name]], na.rm = TRUE)
+  
+  # Replace -20 values
+  dfplot[[column_name]][dfplot[[column_name]] == -20] <- (min_cor_mfe)
+  
+  # write.csv(dfplot, "corrected_data/cor_mutmfes_log2_minus20s.csv",row.names = F)
+  
+  hmcol<-rev(brewer.pal(11,"RdBu"))
+  
+  # Create ggplot object
+  ggplot(dfplot, aes(site, mutation)) + 
+    geom_raster(aes(fill = dfplot[[column_name]])) + 
+    scale_fill_gradientn(colours = hmcol, 
+                         values = rescale(c((-4),0,(4))), 
+                         space = "Lab",
+                         limits = c((-4), (4)),
+                         breaks = seq((-4), (4), by = 1.0),
+                         na.value = "gray", 
+                         guide = "colourbar", aesthetics = c("colour", "fill")) +
+    guides(fill = guide_colourbar(ticks = FALSE, title = "")) +
+    scale_x_continuous(expand = c(0, 0), name = "site") + 
+    scale_y_discrete(expand = c(0, 0), name = "mutation") +
+    theme_classic() +
+    facet_wrap(. ~ precursor, nrow = 3, scales = "free") +
+    ggtitle(paste("Plot for", column_name))  # Add a title
+  
+  
+  #longheatmap
+  summary_df <- dfplot %>%
+    group_by(indiv_prot) %>%
+    summarize(min_site = min(site), max_site = max(site), precursor = unique(indiv_prot))
+
+   ggplot(dfplot, aes(site, mutation)) + 
+    geom_raster(aes(fill = dfplot[[column_name]])) +
+     geom_vline(data = summary_df, aes(xintercept = max_site), color = "black", linetype = "solid", size=1) + # Add vertical lines
+    scale_fill_gradientn(colours = hmcol, 
+                         values = rescale(c((-4),0,(4))), 
+                         space = "Lab",
+                         limits = c((-4), (4)),
+                         breaks = seq((-4), (4), by = 1.0),
+                         na.value = "gray", 
+                         guide = "colourbar", aesthetics = c("colour", "fill")) +
+    guides(fill = guide_colourbar(ticks = FALSE, title = "")) +
+    scale_x_continuous(expand = c(0, 0), name = "site") + 
+    scale_y_discrete(expand = c(0, 0), name = "mutation") +
+    theme_classic() +
+    ggtitle(paste("Plot for", column_name))  
+   
+#density plot removing -20s
+  dfplot <- df
+  dfplot=dfplot %>% filter(!wtAA==mutAA)
+  dfplot$cor_lm_passage2[dfplot$cor_lm_passage2==-20]=NA
+  
+  ggplot(dfplot, aes(x=cor_lm_passage2, fill=precursor)) + 
+    geom_density(alpha=0.5)+
+    facet_wrap(.~indiv_prot)+
+    geom_vline(xintercept = 0)+
+    theme_classic()
+  
+ #sitedf
+  dfplot <- df
+  dfplot=dfplot %>% filter(!wtAA==mutAA)
+  dfplot$cor_lm_passage2[dfplot$cor_lm_passage2==-20]=min_cor_mfe
+  
+  #exclude dels and get sitedf
+  sitedf=dfplot %>% filter(mutAA!="del")
+  sitedf=sitedf %>% group_by(site, precursor, indiv_prot) %>% summarise(avg_cor_lm_passage2=mean(cor_lm_passage2, na.rm=T))
+  # write.csv(sitedf,"corrected_data/cor_sitemfes_log2.csv", row.names=F)
+  
+  ggplot(sitedf, aes(x=indiv_prot, y=avg_cor_lm_passage2, fill=precursor)) + 
+    geom_boxplot(alpha=0.5)+
+    geom_hline(yintercept = 0)+
+    theme_classic()
+  
+
+  ggplot(sitedf, aes(x=site, y=avg_cor_lm_passage2, color=avg_cor_lm_passage2)) + 
+    geom_line(alpha=0.5)+
+    geom_hline(yintercept = 1)+
+    theme_classic()
+
+

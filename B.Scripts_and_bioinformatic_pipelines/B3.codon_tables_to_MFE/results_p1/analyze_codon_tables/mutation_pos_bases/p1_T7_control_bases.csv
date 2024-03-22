@@ -1,0 +1,17 @@
+wt,mut,count
+A,A,0
+A,C,89
+A,G,118
+A,T,75
+C,A,71
+C,C,0
+C,G,71
+C,T,28
+G,A,70
+G,C,14
+G,G,0
+G,T,68
+T,A,99
+T,C,102
+T,G,31
+T,T,0

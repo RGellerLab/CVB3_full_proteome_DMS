@@ -1,9 +1,9 @@
 
 
 #Select region to run
-# region="p1"
-# region="p2"
-region="p3"
+ region="p1"
+#region="p2"
+# region="p3"
 
 
 ###############
@@ -187,7 +187,7 @@ get_enrich_stops(condition.file=comparison.file,
 rm(get_enrich_stops)
 
 if(region=="p2"|region=="p3"){
-## out directory out.dir=paste0("../results_",region,"/analyze/mfe/dels/")
+##can be ran with deads.marked=T to mark deads as -20s
 get_enrich_del(out.dir=paste0("../results_",region,"/analyze/mfe/dels/"),
                data.dir=paste0("../results_",region,"/unfiltered/deletions/"),
                condition.file=comparison.file,
@@ -251,6 +251,15 @@ for (i in c(1:length(vars))){
   
   rm(combine_synmfe)
 
+#get avg dels mfe 
+if(region=="p2"|region=="p3"){
+for (i in c(1:length(vars))){
+    combine_delsmfe(data.dir=paste0("../results_",region,"/analyze/mfe/dels/"),
+                   condition.file=comparison.file,
+                   out.dir=paste0("../results_",region,"/combined_mfe/delsmfe/"),
+                   group=vars[i])}
+  
+  rm(combine_delsmfe)}
 # #get avg stop mfe 
 # for (i in c(1:length(vars))){
 #   combine_stopsmfe(data.dir=paste0("../results_",region,"/analyze/mfe/stops/"),

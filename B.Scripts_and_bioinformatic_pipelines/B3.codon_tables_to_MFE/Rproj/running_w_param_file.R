@@ -1,8 +1,8 @@
 
 
 #Select region to run
-# region="p1"
-region="p2"
+ region="p1"
+#region="p2"
 # region="p3"
 
 

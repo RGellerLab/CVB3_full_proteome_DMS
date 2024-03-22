@@ -1,9 +1,9 @@
 {
     "id": "9BC5C7F4",
-    "path": "C:/Users/Bea/Dropbox/BAR/CVB3_P1P2P3_dms/P1P2P3_manuscript/github/C.codon_tables_to_MFE/Rproj/running_w_param_file.R",
+    "path": "C:/Users/Bea/Dropbox/BAR/CVB3_P1P2P3_dms/P1P2P3_manuscript/Actual_github/CVB3_full_proteome_DMS/B.Scripts_and_bioinformatic_pipelines/B3.codon_tables_to_MFE/Rproj/running_w_param_file.R",
     "project_path": "running_w_param_file.R",
     "type": "r_source",
-    "hash": "548309822",
+    "hash": "2122122600",
     "contents": "",
     "dirty": false,
     "created": 1706013206016.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "254,0",
-        "scrollLine": "228"
+        "cursorPosition": "120,0",
+        "scrollLine": "94"
     },
     "folds": "",
-    "lastKnownWriteTime": 1709297237,
+    "lastKnownWriteTime": 1710332222,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1709297237261,
+    "last_content_update": 1710332222395,
     "read_only": false,
     "read_only_alternatives": []
 }

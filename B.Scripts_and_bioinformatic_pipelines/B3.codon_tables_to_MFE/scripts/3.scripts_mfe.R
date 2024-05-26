@@ -509,12 +509,16 @@ get_enrich_syn=function(condition.file="../p2dms_comparisons.csv",
     cov$pseudo.pre=sapply(1:nrow(cov),function(x) pseudo * cov$pre.cov[x]/min(cov[x,c("pre.cov","post.cov")]))
     cov$pseudo.post=sapply(1:nrow(cov),function(x) pseudo * cov$post.cov[x]/min(cov[x,c("pre.cov","post.cov")]))
     
-    ## now aggregate by mut AA
+    ## filter all that are not synonymous and that have counts, and remove WT counts
+    res=res %>% filter(wtAA==mutAA) %>% rowwise() %>% mutate(sums=sum(pre+post,na.rm = T)) %>% filter(sums>0) %>% 
+      select(-sums) %>% filter(wildtype!=mut)
+    
+    ## now aggregate by mut AA in case there is more than 1 syn
     res=res %>% group_by(site,wildtype,wtAA,mutAA) %>% filter(mutAA!="*") %>% summarize(pre=sum(pre,na.rm = T),
                                                                                         post=sum(post,na.rm = T))
     ################## pseudo
     
-    ## add pseudo to counts in res (AA/mut AND wts)
+    ## add pseudo to counts in res
     for (s in unique(res$site)){ 
       # s=5
       res$pre[res$site==s]= 
@@ -541,29 +545,39 @@ get_enrich_syn=function(condition.file="../p2dms_comparisons.csv",
     
     # standardize to wt
     for (s in unique(res$site)){
-      #  s=24
+      #  s=2
       res$enrich.pre[res$site==s]=res$pre[res$site==s]/wts$pre[wts$site==s]
       res$enrich.post[res$site==s]=res$post[res$site==s]/wts$post[wts$site==s]
       
       rm(s)
     }
-    rm(wts)
+    
+    ## get preferences
     res$prefs=res$enrich.post/res$enrich.pre
+    ## log 2 to get MFE
     res$mfe=log2(res$prefs)
     
-    res=filter(res,wtAA==mutAA)
+    ## select relevant columns
     res=select(res,site,wildtype,wtAA,mutAA,log2mfe=mfe)# prefs,
+    ## combine with the missing positions present in the wts dataframe
+    final=select(wts,-pre,-post,-mut) %>% mutate(log2mfe=NA) %>% filter(!site%in%res$site)
+    final=bind_rows(final,res) %>% arrange(site)
+    rm(wts,res)
     
+    ## if want to filter positions
     if (filter.position==T){
-      res=filter(res,site%in%start:end)
+      final=filter(final,site%in%start:end)
     }
+    #if want to correct start position
     if (correct.start.pos==T){
-      res$site=(res$site-start)+aa.pos.correct
+      final$site=(final$site-start)+aa.pos.correct
     }
     
-    names(res)[names(res)=="log2mfe"]=nm
-    write_csv(res,paste0(out.dir,nm,"_rel.enrich.csv"))
-    rm(nm,r)}
+    # rename MFE column to be the chosen name of the comparison
+    names(final)[names(final)=="log2mfe"]=nm
+    # write data
+    write_csv(final,paste0(out.dir,nm,"_rel.enrich.csv"))
+    rm(nm,r,final)}
 }
 
 # june 22 2023, RG
@@ -579,7 +593,7 @@ get_enrich_del=function(condition.file="../p2dms_comparisons.csv",
                         end=605,
                         correct.start.pos=T,
                         aa.pos.correct=847,
-                        mark.deads=F){
+                        mark.deads=T){
   
   # out.dir="../results/analyze/mfe/dels/"
   # condition.file=comparison.file

@@ -1,6 +1,6 @@
 {
     "id": "509ACF31",
-    "path": "C:/Users/Bea/Dropbox/BAR/CVB3_P1P2P3_dms/P1P2P3_manuscript/github/B.Scripts_and_bioinformatic_pipelines/B4.correction_MFEs/scripts/correct_mfes.R",
+    "path": "C:/Users/Bea/Dropbox/BAR/CVB3_P1P2P3_dms/P1P2P3_manuscript/Actual_github/CVB3_full_proteome_DMS/B.Scripts_and_bioinformatic_pipelines/B4.correction_MFEs/scripts/correct_mfes.R",
     "project_path": "correct_mfes.R",
     "type": "r_source",
     "hash": "3281013989",
@@ -12,8 +12,8 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "136,73",
-        "scrollLine": "122"
+        "cursorPosition": "146,23",
+        "scrollLine": "131"
     },
     "folds": "",
     "lastKnownWriteTime": 1709046578,
